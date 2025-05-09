@@ -47,7 +47,7 @@ services:
     environment:
       - PREFECT_API_URL=http://prefect-server:4200/api
     volumes:
-      - ./wait-for-server.sh:/wait-for-server.sh:ro
+      - ./prefect/wait-for-server.sh:/wait-for-server.sh:ro
       - ./work:/home/joyyan/work:rw
     entrypoint: ["/wait-for-server.sh"]
     deploy:
