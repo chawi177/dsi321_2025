@@ -26,12 +26,12 @@ def data_processing(data: list[dict], districts_gdf: gpd.GeoDataFrame) -> pd.Dat
 
     # check
     if 'AQILast' not in df.columns:
-        print("'AQILast' column not found in the data. Skipping this run.")
+        print(" 'AQILast' column not found in the data. Skipping this run.")
         return pd.DataFrame()
 
     # check
     if df['AQILast'].dropna().empty:
-        print("'AQILast' column is empty. Skipping this run.")
+        print(" 'AQILast' column is empty. Skipping this run.")
         return pd.DataFrame()
 
     print("Sample AQILast:")
@@ -52,14 +52,14 @@ def data_processing(data: list[dict], districts_gdf: gpd.GeoDataFrame) -> pd.Dat
         if col in df.columns:
             df[col] = pd.to_numeric(df[col], errors='coerce')
         else:
-            print(f"Warning: Column '{col}' not found in DataFrame")
+            print(f" Warning: Column '{col}' not found in DataFrame")
 
     if 'time' in df.columns and 'date' in df.columns:
         df['time'] = df['time'].mode()[0]
         df['date'] = df['date'].mode()[0]
         df['timestamp'] = pd.to_datetime(df['date'] + ' ' + df['time'])
     else:
-        print("Missing 'time' or 'date' columns.")
+        print(" Missing 'time' or 'date' columns.")
         return pd.DataFrame()
 
     df['year'] = df['timestamp'].dt.year
@@ -110,14 +110,14 @@ def load_to_lakefs(df: pd.DataFrame, lakefs_s3_path: str, storage_options: dict)
         index=False
     )
 
-    print("Done saving to lakeFS.")
+    print(" Done saving to lakeFS.")
 
 
 @flow(name='dust-concentration-pipeline', log_prints=True)
 def main_flow():
     try:
         geojson_path = Path("/home/jovyan/work/bangkok_districts.geojson")
-        print(f"Loading GeoJSON from: {geojson_path}")
+        print(f"🔍 Loading GeoJSON from: {geojson_path}")
         districts_gdf = gpd.read_file(geojson_path)
 
         if districts_gdf.crs is None:
@@ -125,20 +125,20 @@ def main_flow():
         else:
             districts_gdf = districts_gdf.to_crs(epsg=4326)
     except Exception as e:
-        print(f"Failed to load GeoJSON: {e}")
+        print(f" Failed to load GeoJSON: {e}")
         return
 
     try:
         data = fetch_data()
 
         if not data:
-            print("No data fetched.")
+            print(" No data fetched.")
             return
 
         df = data_processing(data, districts_gdf)
 
         if df.empty:
-            print("Processed DataFrame is empty. Skipping load.")
+            print(" Processed DataFrame is empty. Skipping load.")
             return
 
         print(df.head())
@@ -163,7 +163,7 @@ def main_flow():
 
         load_to_lakefs(df, lakefs_s3_path, storage_options)
     except Exception as e:
-        print(f"Flow failed: {e}")
+        print(f" Flow failed: {e}")
         return  
 
 
