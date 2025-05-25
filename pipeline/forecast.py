@@ -32,6 +32,7 @@ def forecast_pm25_aqi(df: pd.DataFrame) -> pd.DataFrame:
     print(f"🔎 Forecasting PM2.5 and AQI for all stations...")
 
     df = df[~df['nameTH'].isin(OUTLIER_STATIONS)]
+    df = df[(df['AQI.aqi'] >= 0) & (df['PM25.value'] >= 0)]
     df = df[['timestamp', 'nameTH', 'PM25.value', 'AQI.aqi']].dropna()
     df['load_time'] = datetime.now()
 
@@ -79,15 +80,6 @@ def forecast_pm25_aqi(df: pd.DataFrame) -> pd.DataFrame:
         forecast_df = pd.DataFrame(columns=['index', 'timestamp', 'nameTH', 'AQI_forecast', 'PM25_forecast'])
 
     return forecast_df
-
-
-#@task
-#def delete_old_forecast():
-#    fs = fsspec.filesystem('s3', **STORAGE_OPTIONS)
-#    if fs.exists(LAKEFS_PATH_OUT):
-#        print(f"🧹 Deleting old forecast at: {LAKEFS_PATH_OUT}")
-#        fs.rm(LAKEFS_PATH_OUT, recursive=True)
-
 
 @task
 def save_to_lakefs(df: pd.DataFrame):

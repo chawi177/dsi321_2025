@@ -139,8 +139,8 @@ cache_key = get_latest_hour_key()
 df, cache_time, _, is_complete = load_latest_day_data(cache_key)
 
 if not is_complete:
-    st.warning("ข้อมูลบางชั่วโมงยังมาไม่ครบ")
-    if st.button("รีเซ็ต Cache และโหลดใหม่"):
+    st.warning("⚠️ ข้อมูลบางชั่วโมงยังมาไม่ครบ")
+    if st.button("🔄 รีเซ็ต Cache และโหลดใหม่"):
         st.cache_data.clear()
         st.session_state.last_load_time = time.time()
         st.rerun()
@@ -149,7 +149,7 @@ if not is_complete:
 st.subheader("รายงานคุณภาพอากาศในกรุงเทพมหานคร")
 thai_time = cache_time.replace(tzinfo=ZoneInfo("UTC")).astimezone(ZoneInfo("Asia/Bangkok"))
 #st.caption(f"cache_key = {cache_key}")
-st.caption(f"ข้อมูลล่าสุดเมื่อ: {thai_time.strftime('%d/%m/%Y %H:%M:%S')}")
+st.caption(f"🕑 ข้อมูลล่าสุดเมื่อ: {thai_time.strftime('%d/%m/%Y %H:%M:%S')}")
 #st.write("ล่าสุดจากฟังก์ชัน get_latest_hour_key():", get_latest_hour_key())
 #st.write("last_load_time", st.session_state.last_load_time)
 #st.write("current_time", time.time())
@@ -167,6 +167,7 @@ latest_hour = max(available_hours)
 df_latest = df[df['timestamp'].dt.hour == latest_hour].copy()
 
 # ---------- Create search field ----------
+df_latest = df_latest[df_latest["AQI.aqi"] >= 0].copy()
 df_latest["AQI_level"], df_latest["AQI_color"] = zip(*df_latest["AQI.aqi"].apply(get_aqi_level_and_color))
 df_latest['search_key'] = df_latest['nameTH'] + " (" + df_latest['district'] + ")"
 search_list = sorted(df_latest['search_key'].unique())
@@ -176,7 +177,7 @@ selected_search = st.selectbox("ค้นหาสถานที่หรือ
 # ---------- Display selected location ----------
 df_filtered = df_latest[df_latest['search_key'] == selected_search]
 if df_filtered.empty:
-    st.warning("ไม่พบข้อมูลสำหรับพื้นที่ที่เลือก")
+    st.warning("❌ ไม่พบข้อมูลสำหรับพื้นที่ที่เลือก")
 else:
     record = df_filtered.iloc[0]
     aqi = record['AQI.aqi']

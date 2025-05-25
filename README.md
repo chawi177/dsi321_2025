@@ -81,7 +81,6 @@ Air pollution, especially PM2.5, remains a critical health issue in Bangkok. Thi
 ```bash
 git clone https://github.com/chawi177/dsi321_2025.git
 cd dsi321_2025
-Start Docker services
 ```
 
 2. **Start Docker services**
@@ -95,7 +94,7 @@ Access services
 
 Prefect UI: http://localhost:4200
 
-Streamlit Dashboard: http://localhost:8501
+Streamlit Dashboard: http://localhost:8502
 
 JupyterLab: http://localhost:8888
 
