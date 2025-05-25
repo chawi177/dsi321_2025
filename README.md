@@ -2,7 +2,7 @@
 
 ![Created at](https://img.shields.io/github/created-at/chawi177/dsi321_2025)
 ![Last Commit](https://img.shields.io/github/last-commit/chawi177/dsi321_2025)
-![Commits](https://img.shields.io/github/commit-count/chawi177/dsi321_2025?label=Total%20Commits)
+![Total Commits](https://img.shields.io/github/commit-activity/y/chawi177/dsi321_2025?label=Total%20commits)
 
 ## 📌 Project Overview
 
@@ -107,10 +107,10 @@ docker-compose up --build -d
 
 3. **Access Local Services**
 
-Prefect UI: http://localhost:4200
-Streamlit Dashboard: http://localhost:8502
-JupyterLab: http://localhost:8888
-LakeFS: http://localhost:8001
+- Prefect UI: http://localhost:4200
+- Streamlit Dashboard: http://localhost:8502
+- JupyterLab: http://localhost:8888
+- LakeFS: http://localhost:8001
 
 **🗝 Default login for LakeFS**: 
 
@@ -205,7 +205,7 @@ python deploy_ml.py
 
 ## 📊 Streamlit Dashboard Overview
 
-![Dashboard Demo](img/dashboard_demo.png)
+![Dashboard Demo](visualization/img/dashboard_demo.png)
 
 The dashboard provides a city-wide overview of real-time and forecasted air quality in Bangkok.
 
@@ -280,7 +280,7 @@ lakefs://dust-concentration/main/forecast/forecast.parquet
 
 For questions, feedback, or collaboration inquiries, feel free to reach out:
 
-- 📧 Email: chawisa.wann@gmail.com  
+- 📧 Email: chawisa.wann@gmail.com 
 
 <p align="center">
   <strong>DSI321: BIG DATA INFRASTRUCTURE | 2025</strong><br>
