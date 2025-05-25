@@ -17,12 +17,17 @@ Air pollution, especially PM2.5, remains a critical health issue in Bangkok. Thi
 
 ---
 
-## 🚀 Features
+### 🚀 Features
 
 ### ✅ Automated ETL Pipeline (Prefect)
 - Hourly scheduled data collection from Air4Thai API
 - Data cleaning, transformation, and storage in CSV and Parquet formats
-- Data versioning with LakeFS
+- Data versioning and management with **LakeFS** for reproducibility and auditability
+
+### ✅ Data Version Control (LakeFS)
+- Enables Git-like operations (branching, committing) on data lakes
+- Provides safe experimentation on datasets without affecting production data
+- Supports rollback to previous data versions to ensure data integrity
 
 ### ✅ Forecasting (ARIMA)
 - Time series modeling of PM2.5 data using ARIMA
